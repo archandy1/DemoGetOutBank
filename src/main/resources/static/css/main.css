@@ -1,0 +1,90 @@
+*{
+    box-sizing: border-box;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+/* Main body Styling */
+
+.container {
+    margin: 20px auto;
+}
+
+body {
+    background-color: white;
+}
+
+/* Main page header */
+.main-page-header {
+    padding: 10px 0px;
+    background-color: #399155;
+    background: #399155;
+}
+
+/* company name */
+
+.main-page-header .company-name {
+    font-weight: 600;
+    color: white;
+}
+
+/* navigation */
+
+.navigation {
+
+    margin-left: 25px;
+}
+
+.navigation li {
+    display: inline-block;
+    list-style-type: none;
+    margin: 0 15px;
+}
+
+.navigation li a {
+    color: white;
+    text-decoration: none;
+}
+
+.display-name {
+    font-weight: 600;
+}
+
+#transactions-btn {
+    background-color: #399155;
+    color: white;
+}
+
+#transact-btn {
+    background-color: #399155;;
+    color: white;
+}
+
+/* Payment card */
+.payment-card {
+    display: none;
+}
+
+/* transfer card */
+.transfer-card {
+    display: none;
+}
+
+/* deposit card */
+.deposit-card {
+    display: none;
+}
+
+/* withdraw card */
+.withdraw-card {
+    display: none;
+}
+
+.button-primary {
+    background-color: #399155;;
+    color: white;
+}
+
+.button-primary {
+    background-color: #399155;;
+    color: white;
+}

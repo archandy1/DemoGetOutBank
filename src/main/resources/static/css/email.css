@@ -1,0 +1,51 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: aliceblue;
+}
+
+.wrapper {
+    width: 550px;
+    height: auto;
+    padding: 15px;
+    background-color: white;
+    border-radius: 7px;
+}
+
+.email-msg-header {
+   text-align: center; 
+}
+
+.wrapper span {
+    margin: 15px 0;
+    font-size: 28px;
+    color: #399155;
+ }
+
+ .welcome-text {
+    font-size: 18px;
+ }
+
+ /* button */
+
+.verify-account-btn {
+    padding: 10px 20px;
+    background-color: #399155;
+    color: white;
+    size: 240px 40px;
+    border-radius: 20px;
+    font: calibre sans-serif;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: 600;
+    display: inline-block;
+    justify-content: center;
+    align-items: center;
+}

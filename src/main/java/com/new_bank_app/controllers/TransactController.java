@@ -1,0 +1,165 @@
+package com.new_bank_app.controllers;
+
+import com.new_bank_app.models.User;
+import com.new_bank_app.repository.AccountRepository;
+import com.new_bank_app.repository.PaymentRepository;
+import com.new_bank_app.repository.TransactRepository;
+import com.new_bank_app.services.TransactService;
+import com.new_bank_app.services.ValidationService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.servlet.http.HttpSession;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
+@Controller
+@RequestMapping("/transact")
+public class TransactController {
+
+    @Autowired
+    private AccountRepository accountRepository;
+    @Autowired
+    private PaymentRepository paymentRepository;
+    @Autowired
+    private TransactRepository transactRepository;
+    @Autowired
+    private ValidationService validationService;
+    @Autowired
+    private TransactService transactService;
+
+    User user;
+    double currentBalance;
+    double newBalance;
+
+    @PostMapping("/deposit")
+    public String deposit(@RequestParam("deposit_amount") String depositAmount,
+                          @RequestParam("account_id") String accountID,
+                          HttpSession session,
+                          RedirectAttributes redirectAttributes) {
+
+        if (depositAmount.isEmpty() || accountID.isEmpty()) {
+            redirectAttributes.addFlashAttribute("error", "Deposit amount cannot be empty.");
+            return "redirect:/app/dashboard";
+        }
+
+        user = (User) session.getAttribute("user");
+
+        int acc_id = Integer.parseInt(accountID);
+        BigDecimal depositAmountValue = BigDecimal.valueOf(Double.parseDouble(depositAmount));
+
+        if (depositAmountValue.compareTo(BigDecimal.ZERO) <= 0) {
+            redirectAttributes.addFlashAttribute("error", "Deposit amount cannot be zero.");
+            return "redirect:/app/dashboard";
+        }
+        transactService.executeDeposit(acc_id, depositAmountValue, user);
+        redirectAttributes.addFlashAttribute("success", "Amount deposited successfully.");
+        return "redirect:/app/dashboard";
+    }
+
+    @PostMapping("/transfer")
+    public String transfer(@RequestParam("transfer_from") String transfer_from,
+                           @RequestParam("transfer_to") String transfer_to,
+                           @RequestParam("transfer_amount") String transfer_amount,
+                           HttpSession session,
+                           RedirectAttributes redirectAttributes) {
+
+        if (transfer_from.isEmpty() || transfer_to.isEmpty() || transfer_amount.isEmpty()) {
+            String transferErrorMsg = "You must select account from, account to, and transfer amount to execute transfer";
+            redirectAttributes.addFlashAttribute("error", transferErrorMsg);
+            return "redirect:/app/dashboard";
+        }
+
+        int transferFromId = Integer.parseInt(transfer_from);
+        int transferToId = Integer.parseInt(transfer_to);
+        BigDecimal transferAmount = BigDecimal.valueOf(Double.parseDouble(transfer_amount));
+
+        if (transfer_from.equals(transfer_to)) {
+            redirectAttributes.addFlashAttribute("error", "You cannot execute transfer into the same account");
+            return "redirect:/app/dashboard";
+        }
+
+        if (transferAmount.compareTo(BigDecimal.ZERO) <= 0) {
+            redirectAttributes.addFlashAttribute("error", "Transfer amount cannot be zero.");
+            return "redirect:/app/dashboard";
+        }
+
+        boolean isTransferGreaterThanBalance = validationService.checkTransferGreaterThanBalance(transferFromId, transferAmount, user);
+        if (isTransferGreaterThanBalance) {
+            redirectAttributes.addFlashAttribute("error", "Insufficient funds to execute transfer.");
+            return "redirect:/app/dashboard";
+        } else {
+            transactService.executeTransfer(transferFromId, transferToId, transferAmount, user);
+            transactRepository.logTransaction(transferFromId, "transfer", transferAmount, "online", "success", "Transfer success", LocalDateTime.now());
+            redirectAttributes.addFlashAttribute("success", "Transfer success");
+        }
+        return "redirect:/app/dashboard";
+    }
+
+    @PostMapping("/withdraw")
+    public String withdraw(@RequestParam("withdrawal_amount") String withdrawal_amount,
+                           @RequestParam("account_id") String accountID,
+                           HttpSession session,
+                           RedirectAttributes redirectAttributes) {
+
+        if (withdrawal_amount.isEmpty() || accountID.isEmpty()) {
+            redirectAttributes.addFlashAttribute("error", "Withdraw amount cannot be empty.");
+            return "redirect:/app/dashboard";
+        }
+        int account_id = Integer.parseInt(accountID);
+        BigDecimal withdrawAmountValue = BigDecimal.valueOf(Double.parseDouble(withdrawal_amount));
+
+        user = (User) session.getAttribute("user");
+
+        if (withdrawAmountValue.compareTo(BigDecimal.ZERO) <= 0) {
+            redirectAttributes.addFlashAttribute("error", "Withdraw amount cannot be zero.");
+            return "redirect:/app/dashboard";
+        }
+
+        boolean isWithdrawGreaterThanBalance = validationService.checkWithdrawGreaterThanBalance(account_id, withdrawAmountValue, user);
+        if (isWithdrawGreaterThanBalance) {
+            redirectAttributes.addFlashAttribute("error", "Insufficient funds to execute withdrawal.");
+            return "redirect:/app/dashboard";
+        } else {
+            transactService.executeWithdraw(account_id, withdrawAmountValue, user);
+        }
+        return "redirect:/app/dashboard";
+    }
+
+    @PostMapping("/payment")
+    public String payment(@RequestParam("beneficiary") String beneficiary,
+                          @RequestParam("account_number") String account_number,
+                          @RequestParam("account_id") String account_id,
+                          @RequestParam("reference") String reference,
+                          @RequestParam("payment_amount") String payment_amount,
+                          HttpSession session,
+                          RedirectAttributes redirectAttributes) {
+
+        if (beneficiary.isEmpty() || account_number.isEmpty() || account_id.isEmpty() || payment_amount.isEmpty()) {
+            redirectAttributes.addFlashAttribute("error", "All payment forms must be filled.");
+            return "redirect:/app/dashboard";
+        }
+        user = (User) session.getAttribute("user");
+
+        int accountId = Integer.parseInt(account_id);
+        BigDecimal paymentAmount = BigDecimal.valueOf(Double.parseDouble(payment_amount));
+
+        if (paymentAmount.compareTo(BigDecimal.ZERO) <= 0) {
+            redirectAttributes.addFlashAttribute("error", "Payment amount cannot be zero.");
+            return "redirect:/app/dashboard";
+        }
+
+        boolean isPaymentGreaterThanBalance = validationService.checkPaymentGreaterThanBalance(accountId, paymentAmount, user);
+        if (isPaymentGreaterThanBalance) {
+            redirectAttributes.addFlashAttribute("error", "Insufficient funds to execute payment.");
+        } else {
+            transactService.executePayment(accountId, paymentAmount, user, beneficiary, reference, account_number);
+            redirectAttributes.addFlashAttribute("success", "Payment Processed Successfully.");
+        }
+        return "redirect:/app/dashboard";
+    }
+}
