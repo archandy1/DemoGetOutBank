@@ -34,25 +34,22 @@
                 <table class="table text-center table-striped">
                     <tr>
                         <th>Transaction ID</th>
-                            <%--                                <th>Account Name</th>--%>
+                        <th>Account Name</th>
                         <th>Transaction Type</th>
                         <th>Amount</th>
                         <th>Source</th>
                         <th>Status</th>
-                        <th>Reason Code</th>
                         <th>Created At</th>
                     </tr>
                     <!-- Loop through Payment history  -->
                     <c:forEach items="${requestScope.transact_history}" var="trasactionHistory">
                         <tr>
                             <td>${trasactionHistory.transaction_id}</td>
-                                <%--                                    <td>${trasactionHistory.account_name}</td>--%>
+                            <td>${trasactionHistory.account_name}</td>
                             <td>${trasactionHistory.transaction_type}</td>
                             <td>${trasactionHistory.amount}</td>
                             <td>${trasactionHistory.source}</td>
                             <td>${trasactionHistory.status}</td>
-
-                            <td>${trasactionHistory.reason_code}</td>
                             <td>${trasactionHistory.created_at}</td>
                         </tr>
                     </c:forEach>

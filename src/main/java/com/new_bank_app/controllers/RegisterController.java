@@ -22,13 +22,17 @@ import java.util.Random;
 @Controller
 public class RegisterController {
 
+
+    private final UserRepository userRepository;
+
     @Autowired
-    private UserRepository userRepository;
+    public RegisterController(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @GetMapping("/register")
     public ModelAndView getRegister() {
         ModelAndView getRegisterPage = new ModelAndView("register");
-        System.out.println("In Register page controller");
         getRegisterPage.addObject("PageTitle", "Register");
         return getRegisterPage;
     }
@@ -54,7 +58,7 @@ public class RegisterController {
 
 
         if (result.hasErrors() && confirm_password.isEmpty()) {
-            registrationPage.addObject("confirm_pass", "Confirm field is requiered");
+            registrationPage.addObject("confirm_pass", "Confirm field is required");
             return registrationPage;
         }
 
@@ -82,7 +86,7 @@ public class RegisterController {
 
         MailMessenger.htmlEmailMessenger("bank@getoutbank.com", email, "Verify Account", emailBody);
 
-        String successMessage = "Acount registered successfully, please check your email and verify account";
+        String successMessage = "Account registered successfully, please check your email and verify account";
         registrationPage.addObject("success", successMessage);
 
         return registrationPage;

@@ -1,10 +1,9 @@
 package com.new_bank_app.controllers;
 
 import com.new_bank_app.models.User;
-import com.new_bank_app.repository.AccountRepository;
-import com.new_bank_app.repository.PaymentRepository;
 import com.new_bank_app.repository.TransactRepository;
 import com.new_bank_app.services.TransactService;
+import com.new_bank_app.services.UserService;
 import com.new_bank_app.services.ValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,20 +20,19 @@ import java.time.LocalDateTime;
 @RequestMapping("/transact")
 public class TransactController {
 
-    @Autowired
-    private AccountRepository accountRepository;
-    @Autowired
-    private PaymentRepository paymentRepository;
-    @Autowired
-    private TransactRepository transactRepository;
-    @Autowired
-    private ValidationService validationService;
-    @Autowired
-    private TransactService transactService;
 
-    User user;
-    double currentBalance;
-    double newBalance;
+    private final TransactRepository transactRepository;
+    private final ValidationService validationService;
+    private final TransactService transactService;
+    private final UserService userService;
+
+    @Autowired
+    public TransactController(TransactRepository transactRepository, ValidationService validationService, TransactService transactService, UserService userService) {
+        this.transactRepository = transactRepository;
+        this.validationService = validationService;
+        this.transactService = transactService;
+        this.userService = userService;
+    }
 
     @PostMapping("/deposit")
     public String deposit(@RequestParam("deposit_amount") String depositAmount,
@@ -47,7 +45,7 @@ public class TransactController {
             return "redirect:/app/dashboard";
         }
 
-        user = (User) session.getAttribute("user");
+        User user = userService.getUser(session);
 
         int acc_id = Integer.parseInt(accountID);
         BigDecimal depositAmountValue = BigDecimal.valueOf(Double.parseDouble(depositAmount));
@@ -74,6 +72,8 @@ public class TransactController {
             return "redirect:/app/dashboard";
         }
 
+        User user = userService.getUser(session);
+
         int transferFromId = Integer.parseInt(transfer_from);
         int transferToId = Integer.parseInt(transfer_to);
         BigDecimal transferAmount = BigDecimal.valueOf(Double.parseDouble(transfer_amount));
@@ -94,7 +94,7 @@ public class TransactController {
             return "redirect:/app/dashboard";
         } else {
             transactService.executeTransfer(transferFromId, transferToId, transferAmount, user);
-            transactRepository.logTransaction(transferFromId, "transfer", transferAmount, "online", "success", "Transfer success", LocalDateTime.now());
+            transactRepository.logTransaction(transferFromId, user.getUser_id(), "transfer", transferAmount, "online", "success", LocalDateTime.now());
             redirectAttributes.addFlashAttribute("success", "Transfer success");
         }
         return "redirect:/app/dashboard";
@@ -113,7 +113,7 @@ public class TransactController {
         int account_id = Integer.parseInt(accountID);
         BigDecimal withdrawAmountValue = BigDecimal.valueOf(Double.parseDouble(withdrawal_amount));
 
-        user = (User) session.getAttribute("user");
+        User user = userService.getUser(session);
 
         if (withdrawAmountValue.compareTo(BigDecimal.ZERO) <= 0) {
             redirectAttributes.addFlashAttribute("error", "Withdraw amount cannot be zero.");
@@ -126,39 +126,6 @@ public class TransactController {
             return "redirect:/app/dashboard";
         } else {
             transactService.executeWithdraw(account_id, withdrawAmountValue, user);
-        }
-        return "redirect:/app/dashboard";
-    }
-
-    @PostMapping("/payment")
-    public String payment(@RequestParam("beneficiary") String beneficiary,
-                          @RequestParam("account_number") String account_number,
-                          @RequestParam("account_id") String account_id,
-                          @RequestParam("reference") String reference,
-                          @RequestParam("payment_amount") String payment_amount,
-                          HttpSession session,
-                          RedirectAttributes redirectAttributes) {
-
-        if (beneficiary.isEmpty() || account_number.isEmpty() || account_id.isEmpty() || payment_amount.isEmpty()) {
-            redirectAttributes.addFlashAttribute("error", "All payment forms must be filled.");
-            return "redirect:/app/dashboard";
-        }
-        user = (User) session.getAttribute("user");
-
-        int accountId = Integer.parseInt(account_id);
-        BigDecimal paymentAmount = BigDecimal.valueOf(Double.parseDouble(payment_amount));
-
-        if (paymentAmount.compareTo(BigDecimal.ZERO) <= 0) {
-            redirectAttributes.addFlashAttribute("error", "Payment amount cannot be zero.");
-            return "redirect:/app/dashboard";
-        }
-
-        boolean isPaymentGreaterThanBalance = validationService.checkPaymentGreaterThanBalance(accountId, paymentAmount, user);
-        if (isPaymentGreaterThanBalance) {
-            redirectAttributes.addFlashAttribute("error", "Insufficient funds to execute payment.");
-        } else {
-            transactService.executePayment(accountId, paymentAmount, user, beneficiary, reference, account_number);
-            redirectAttributes.addFlashAttribute("success", "Payment Processed Successfully.");
         }
         return "redirect:/app/dashboard";
     }

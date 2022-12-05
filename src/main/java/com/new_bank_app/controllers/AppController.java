@@ -1,12 +1,13 @@
 package com.new_bank_app.controllers;
 
 import com.new_bank_app.models.Account;
-import com.new_bank_app.models.PaymentHistory;
+//import com.new_bank_app.models.PaymentHistory;
 import com.new_bank_app.models.TransactionHistory;
 import com.new_bank_app.models.User;
 import com.new_bank_app.repository.AccountRepository;
-import com.new_bank_app.repository.PaymentHistoryRepository;
-import com.new_bank_app.repository.TransactHistoryRepository;
+//import com.new_bank_app.repository.PaymentHistoryRepository;
+import com.new_bank_app.repository.TransactionRepository;
+import com.new_bank_app.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,20 +23,25 @@ import java.util.List;
 public class AppController {
 
     User user;
-    @Autowired
-    private PaymentHistoryRepository paymentHistoryRepository;
+
+
+    private final AccountRepository accountRepository;
+    private final TransactionRepository transactHistoryRepository;
+    private final UserService userService;
 
     @Autowired
-    private AccountRepository accountRepository;
+    public AppController(AccountRepository accountRepository, TransactionRepository transactHistoryRepository, UserService userService) {
+        this.accountRepository = accountRepository;
+        this.transactHistoryRepository = transactHistoryRepository;
+        this.userService = userService;
+    }
 
-    @Autowired
-    private TransactHistoryRepository transactHistoryRepository;
 
     @GetMapping("/dashboard")
     public ModelAndView getDashboard(HttpSession session) {
         ModelAndView getDashboardPage = new ModelAndView("dashboard");
 
-        user = (User)session.getAttribute("user");
+        User user = userService.getUser(session);
 
         List<Account> getUserAccounts = accountRepository.getUserAccountsById(user.getUser_id());
 
@@ -47,26 +53,13 @@ public class AppController {
         return getDashboardPage;
     }
 
-    @GetMapping("/payment_history")
-    public ModelAndView getPaymentHistory(HttpSession session) {
-        ModelAndView getPaymentHistoryPage = new ModelAndView("payment_history");
-
-        user = (User)session.getAttribute("user");
-
-        List<PaymentHistory> userPaymentHistory = paymentHistoryRepository.getPaymentHistoryById(user.getUser_id());
-
-        getPaymentHistoryPage.addObject("payment_history", userPaymentHistory);
-
-        return getPaymentHistoryPage;
-    }
-
 
     @GetMapping("/transact_history")
     public ModelAndView getTransactHistory(HttpSession session) {
 
         ModelAndView getTransactHistoryPage = new ModelAndView("transactHistory");
 
-        user = (User)session.getAttribute("user");
+        User user = userService.getUser(session);
 
         List<TransactionHistory> userTransactHistory = transactHistoryRepository.getTransactionRecordsById(user.getUser_id());
         getTransactHistoryPage.addObject("transact_history", userTransactHistory);

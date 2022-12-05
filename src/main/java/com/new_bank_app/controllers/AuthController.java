@@ -18,16 +18,18 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class AuthController {
 
+
+    private final UserRepository userRepository;
     @Autowired
-    private UserRepository userRepository;
+
+    public AuthController(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @GetMapping("/login")
     public ModelAndView getLogin() {
-        System.out.println("In login page controller");
         ModelAndView getLoginPage = new ModelAndView("login");
-
         String token = Token.generateToken();
-
         getLoginPage.addObject("token", token);
         getLoginPage.addObject("PageTitle", "Login");
         return getLoginPage;

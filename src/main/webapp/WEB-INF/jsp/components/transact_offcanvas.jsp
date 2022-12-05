@@ -14,7 +14,6 @@
         <!-- Transaction Type drop down list-->
         <select name="transaction-type" class="form-control my-3" id="transact-type">
             <option value="">Select transaction type</option>
-            <option value="payment">Payment</option>
             <option value="transfer">Transfer</option>
             <option value="deposit">Deposit</option>
             <option value="withdraw">Withdraw</option>
@@ -22,7 +21,7 @@
         <!-- END Transaction Type drop down list-->
 
         <!-- Payment form cards-->
-        <c:import url="components/transact_forms/payment_form.jsp"/>
+<%--        <c:import url="components/transact_forms/payment_form.jsp"/>--%>
         <!-- Transfer form cards-->
         <c:import url="components/transact_forms/transfer_form.jsp"/>
         <!-- Deposit form cards-->

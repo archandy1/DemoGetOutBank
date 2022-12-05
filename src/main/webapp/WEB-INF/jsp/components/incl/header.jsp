@@ -5,7 +5,7 @@
 
 <!-- Main Page Header-->
 
-<header class="main-page-header mb-3 bg-primary">
+<header class="main-page-header mb-3">
     <!-- container -->
     <div class="container d-flex">
         <!-- Company Name -->
@@ -17,7 +17,7 @@
         <!-- Navigation -->
         <div class="nav navigation">
             <li><a href="/app/dashboard">Dashboard</a></li>
-            <li><a href="/app/payment_history">Payment History</a></li>
+<%--            <li><a href="/app/payment_history">Payment History</a></li>--%>
             <li><a href="/app/transact_history">Transaction History</a></li>
         </div>
         <!-- End Navigation -->

@@ -3,6 +3,7 @@ package com.new_bank_app.controllers;
 import com.new_bank_app.helpers.GenAccountNumber;
 import com.new_bank_app.models.User;
 import com.new_bank_app.repository.AccountRepository;
+import com.new_bank_app.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,8 +17,14 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/account")
 public class AccountController {
 
+    private final AccountRepository accountRepository;
+    private final UserService userService;
+
     @Autowired
-    private AccountRepository accountRepository;
+    public AccountController(AccountRepository accountRepository, UserService userService) {
+        this.accountRepository = accountRepository;
+        this.userService = userService;
+    }
 
     @PostMapping("/create_account")
     public String createAccount(@RequestParam("account_name") String accountName,
@@ -30,7 +37,7 @@ public class AccountController {
             return "redirect:/app/dashboard";
         }
 
-        User user = (User)session.getAttribute("user");
+        User user = userService.getUser(session);
 
         String accountNumber = GenAccountNumber.generateAccountNumber();
 
