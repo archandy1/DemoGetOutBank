@@ -10,9 +10,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/bootstrap/bootstrap.css">
     <link rel="stylesheet" href="css/fontawesome/css/all.css">
-    <link rel="stylesheet" href="css/default.css">
+    <link rel="stylesheet" href="../src/main/resources/static/css/fontawesome/default.css">
     <title>Login</title>
 </head>
+
 <body class="d-flex align-items-center justify-content-center">
 
 <!-- Card: Login form card -->
@@ -21,7 +22,7 @@
 
     <div class="card-body">
         <!-- form header -->
-        <h1 class="form-header card-title mb-3">
+        <h1 class="form-header mb-3">
             <i class="fa fa-user-circle"></i> Login
         </h1>
         <!-- end form header -->
@@ -77,14 +78,13 @@
 
         <!-- Card text -->
         <p class="card-text my-2">
-            Don't have an account? <span class="ms-2 text-warning"><a href="/register"
-                                                                      class="btn btn-sm text-warning"></a>Sign Up</span>
+            Don't have an account? <span class="ms-2 text-warning"><a href="/register" class="btn btn-bg text-warning"></a>Sign Up</span>
         </p>
         <!-- Card text -->
 
         <!-- Back button to landing page -->
         <small class="text-warning">
-            <i class="fa fa-arrow-alt-circle-left me-1"></i> <a href="/" class="btn btn-sm text-warning">Back</a>
+            <i class="fa fa-arrow-alt-circle-left me-1"></i> <a href="/" id="back-btn" class="btn btn-sm text-warning">Back</a>
         </small>
         <!--End  Back button to landing page -->
 

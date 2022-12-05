@@ -9,13 +9,13 @@
     <!-- container -->
     <div class="container d-flex">
         <!-- Company Name -->
-        <div class="company-name">
-            Get-Out Bank
+        <div id="company" class=" h1 company-name">
+            Get-Out-Bank
         </div>
         <!-- End Company Name -->
 
         <!-- Navigation -->
-        <div class="nav navigation">
+        <div class="nav-title navigation">
             <li><a href="/app/dashboard">Dashboard</a></li>
 <%--            <li><a href="/app/payment_history">Payment History</a></li>--%>
             <li><a href="/app/transact_history">Transaction History</a></li>
@@ -29,8 +29,8 @@
         <!-- End of  Display name -->
 
         <!-- logout button -->
-        <a href="/logout" class="btn btn-sm text-white ms-2">
-            <i class="fas fa-sign-out-alt"></i> Sign Out
+        <a id="sign-out-btn" href="/logout" class="btn btn-bg text-white ms-2">
+            <i id="sign-out" class="fas fa-sign-out-alt"></i> Sign Out
         </a>
         <!-- End of logout button -->
     </div>

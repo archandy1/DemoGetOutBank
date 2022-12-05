@@ -27,6 +27,9 @@ public interface AccountRepository extends CrudRepository <Account, Integer> {
     @Query(value = "SELECT balance FROM accounts WHERE user_id = :user_id AND account_id = :account_id", nativeQuery = true)
     BigDecimal getAccountBalance(@Param("user_id")int user_id, @Param("account_id") int account_id);
 
+    @Query(value = "SELECT account_name FROM accounts WHERE account_id = :account_id", nativeQuery = true)
+    String getUserAccountName(@Param("account_id") String account_id);
+
 
     @Modifying
     @Query(value = "UPDATE accounts SET balance = :new_balance WHERE account_id = :account_id", nativeQuery = true)

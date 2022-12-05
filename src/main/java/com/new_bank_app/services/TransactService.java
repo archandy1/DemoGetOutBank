@@ -1,5 +1,6 @@
 package com.new_bank_app.services;
 
+import com.new_bank_app.models.Account;
 import com.new_bank_app.models.User;
 import com.new_bank_app.repository.AccountRepository;
 import com.new_bank_app.repository.TransactRepository;
@@ -16,6 +17,8 @@ public class TransactService {
     private final TransactRepository transactRepository;
     private final AccountService accountService;
 
+
+
     @Autowired
     public TransactService(AccountRepository accountRepository, TransactRepository transactRepository, AccountService accountService) {
         this.accountRepository = accountRepository;
@@ -23,17 +26,24 @@ public class TransactService {
         this.accountService = accountService;
     }
 
+
+
+
+
     public void executeWithdraw(int account_id, BigDecimal withdrawAmountValue, User user) {
         BigDecimal currentBalance = accountRepository.getAccountBalance(user.getUser_id(), account_id);
         BigDecimal newBalance = currentBalance.subtract(withdrawAmountValue);
-        transactRepository.logTransaction(account_id, user.getUser_id(),"withdrawal",  withdrawAmountValue, "online", "success",  LocalDateTime.now());
+        String accountName = accountRepository.getUserAccountName(String.valueOf(account_id));
+        transactRepository.logTransaction(account_id, user.getUser_id(),accountName, "withdrawal",  withdrawAmountValue, "online", "success",  LocalDateTime.now());
         accountRepository.changeAccountBalanceById(newBalance, account_id);
+
     }
 
     public void executeDeposit(int acc_id, BigDecimal depositAmountValue, User user) {
         BigDecimal currentBalance = accountRepository.getAccountBalance(user.getUser_id(), acc_id);
         BigDecimal newBalance = currentBalance.add(depositAmountValue);
-        transactRepository.logTransaction(acc_id, user.getUser_id(), "deposit", depositAmountValue, "online", "success", LocalDateTime.now());
+        String accountName = accountRepository.getUserAccountName(String.valueOf(acc_id));
+        transactRepository.logTransaction(acc_id, user.getUser_id(), accountName,"deposit", depositAmountValue, "online", "success", LocalDateTime.now());
         accountRepository.changeAccountBalanceById(newBalance, acc_id);
     }
 

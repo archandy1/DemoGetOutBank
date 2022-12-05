@@ -1,6 +1,7 @@
 package com.new_bank_app.controllers;
 
 import com.new_bank_app.models.User;
+import com.new_bank_app.repository.AccountRepository;
 import com.new_bank_app.repository.TransactRepository;
 import com.new_bank_app.services.TransactService;
 import com.new_bank_app.services.UserService;
@@ -27,14 +28,16 @@ public class TransactController {
     private final TransactService transactService;
     private final UserService userService;
     private final Attribute attribute;
+    private final AccountRepository accountRepository;
 
     @Autowired
-    public TransactController(TransactRepository transactRepository, ValidationService validationService, TransactService transactService, UserService userService, Attribute attribute) {
+    public TransactController(TransactRepository transactRepository, ValidationService validationService, TransactService transactService, UserService userService, Attribute attribute, AccountRepository accountRepository) {
         this.transactRepository = transactRepository;
         this.validationService = validationService;
         this.transactService = transactService;
         this.userService = userService;
         this.attribute = attribute;
+        this.accountRepository = accountRepository;
     }
 
     @PostMapping("/deposit")
@@ -97,7 +100,8 @@ public class TransactController {
             return "redirect:/app/dashboard";
         } else {
             transactService.executeTransfer(transferFromId, transferToId, transferAmount, user);
-            transactRepository.logTransaction(transferFromId, user.getUser_id(), "transfer", transferAmount, "online", attribute.SUCCESS, LocalDateTime.now());
+            String accountName = accountRepository.getUserAccountName(String.valueOf(transferFromId));
+            transactRepository.logTransaction(transferFromId, user.getUser_id(), accountName,"transfer", transferAmount, "online", attribute.SUCCESS, LocalDateTime.now());
             redirectAttributes.addFlashAttribute(attribute.SUCCESS, "Transfer success");
         }
         return "redirect:/app/dashboard";
