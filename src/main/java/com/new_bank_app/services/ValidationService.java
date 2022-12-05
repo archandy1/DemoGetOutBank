@@ -10,8 +10,11 @@ import java.math.BigDecimal;
 @Service
 public class ValidationService {
 
+    private final AccountRepository accountRepository;
     @Autowired
-    private AccountRepository accountRepository;
+    public ValidationService(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
+    }
 
     public boolean checkWithdrawGreaterThanBalance(int account_id, BigDecimal withdrawAmountValue, User user) {
         BigDecimal currentBalance = accountRepository.getAccountBalance(user.getUser_id(), account_id);
@@ -21,7 +24,6 @@ public class ValidationService {
     public boolean checkTransferGreaterThanBalance(int transferFromId, BigDecimal transferAmount,  User user) {
         BigDecimal currentBalanceAccountFrom = accountRepository.getAccountBalance(user.getUser_id(), transferFromId);
         return (currentBalanceAccountFrom.compareTo(transferAmount) < 0);
-
     }
 }
 

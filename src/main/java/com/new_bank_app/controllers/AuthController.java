@@ -3,6 +3,7 @@ package com.new_bank_app.controllers;
 import com.new_bank_app.helpers.Token;
 import com.new_bank_app.models.User;
 import com.new_bank_app.repository.UserRepository;
+import com.new_bank_app.type.Attribute;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
@@ -20,10 +21,12 @@ public class AuthController {
 
 
     private final UserRepository userRepository;
+    private final Attribute attribute;
     @Autowired
 
-    public AuthController(UserRepository userRepository) {
+    public AuthController(UserRepository userRepository, Attribute attribute) {
         this.userRepository = userRepository;
+        this.attribute = attribute;
     }
 
     @GetMapping("/login")
@@ -43,7 +46,7 @@ public class AuthController {
                         HttpSession session) {
 
         if (email.isEmpty() || password.isEmpty()) {
-            model.addAttribute("error", "Username or password cannot be empty.");
+            model.addAttribute(attribute.ERROR, "Username or password cannot be empty.");
             return "login";
         }
 
@@ -52,17 +55,17 @@ public class AuthController {
         if (getEmailInDatabase != null) {
             String getPasswordInDatabase = userRepository.getUserPassword(getEmailInDatabase);
             if (!BCrypt.checkpw(password, getPasswordInDatabase)) {
-                model.addAttribute("error", "Incorrect username or password");
+                model.addAttribute(attribute.ERROR, "Incorrect username or password");
                 return "login";
             }
         } else {
-            model.addAttribute("error", "Unexpected authentication error");
+            model.addAttribute(attribute.ERROR, "Unexpected authentication error");
             return "error";
         }
 
         int verified = userRepository.isVerified(getEmailInDatabase);
         if (verified != 1) {
-            model.addAttribute("error", "This account is not verified. Please check your email and verify account.");
+            model.addAttribute(attribute.ERROR, "This account is not verified. Please check your email and verify account.");
             return "login";
         }
 

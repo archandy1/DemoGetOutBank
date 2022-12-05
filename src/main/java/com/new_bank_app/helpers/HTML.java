@@ -1,9 +1,9 @@
 package com.new_bank_app.helpers;
 
 public class HTML {
-    public static String htmlEmailTemplate(String token, String code) {
+    public static String htmlEmailTemplate(String token) {
 
-        String url = "http://127.0.0.1:8080/verify?token=" + token + "&code=" + code;
+        String url = "http://127.0.0.1:8080/verify?token=" + token;
 
         String emailTemplate = "<!DOCTYPE html>\n" +
                 "<html lang='en'>\n" +

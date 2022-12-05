@@ -42,7 +42,6 @@ public class User {
     private String flat_or_building_number;
     private String phone_number;
     private String token;
-    private String code;
     private int verified;
     private LocalDate verified_at;
     private LocalDateTime created_at;

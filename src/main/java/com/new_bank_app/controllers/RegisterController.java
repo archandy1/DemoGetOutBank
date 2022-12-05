@@ -17,7 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.mail.MessagingException;
 import javax.validation.Valid;
-import java.util.Random;
 
 @Controller
 public class RegisterController {
@@ -69,12 +68,7 @@ public class RegisterController {
 
         String token = Token.generateToken();
 
-        Random rand = new Random();
-        int bound = 123;
-        int tempCode = bound * rand.nextInt(bound);
-        String code = String.valueOf(tempCode);
-
-        String emailBody = HTML.htmlEmailTemplate(token, code);
+        String emailBody = HTML.htmlEmailTemplate(token);
 
         String encoded_password = BCrypt.hashpw(password, BCrypt.gensalt());
 
@@ -82,7 +76,7 @@ public class RegisterController {
                 first_name, last_name, email,
                 encoded_password, pesel, date_of_birth,
                 city, zip_code, street_name, street_number,
-                flat_or_building_number, phone_number, token, code);
+                flat_or_building_number, phone_number, token);
 
         MailMessenger.htmlEmailMessenger("bank@getoutbank.com", email, "Verify Account", emailBody);
 

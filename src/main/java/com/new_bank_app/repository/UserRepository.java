@@ -24,8 +24,8 @@ public interface UserRepository extends CrudRepository< User, Integer > {
     int isVerified(@Param("email")  String email);
 
     @Modifying
-    @Query(value = "INSERT INTO users (first_name, last_name, email, password, pesel, date_of_birth, city, zip_code, street_name, street_number, flat_or_building_number, phone_number, token, code) VALUES" +
-            "(:first_name, :last_name, :email, :password, :pesel, :date_of_birth, :city, :zip_code, :street_name, :street_number, :flat_or_building_number, :phone_number, :token, :code)", nativeQuery = true)
+    @Query(value = "INSERT INTO users (first_name, last_name, email, password, pesel, date_of_birth, city, zip_code, street_name, street_number, flat_or_building_number, phone_number, token) VALUES" +
+            "(:first_name, :last_name, :email, :password, :pesel, :date_of_birth, :city, :zip_code, :street_name, :street_number, :flat_or_building_number, :phone_number, :token)", nativeQuery = true)
     @Transactional
     void registerUser(@Param("first_name") String first_name,
                       @Param("last_name") String last_name,
@@ -39,13 +39,12 @@ public interface UserRepository extends CrudRepository< User, Integer > {
                       @Param("street_number") String street_number,
                       @Param("flat_or_building_number") String flat_or_building_number,
                       @Param("phone_number") String phone_number,
-                      @Param("token") String token,
-                      @Param("code") String code);
+                      @Param("token") String token);
 
     @Modifying
-    @Query(value = "UPDATE users SET token=null, code=null, verified=1, verified_at=NOW(), updated_at=NOW() WHERE token= :token AND code= :code", nativeQuery = true)
+    @Query(value = "UPDATE users SET token=null, verified=1, verified_at=NOW(), updated_at=NOW() WHERE token= :token", nativeQuery = true)
     @Transactional
-    void verifyAccount(@Param("token")String token, @Param("code") String code);
+    void verifyAccount(@Param("token")String token);
 
     @Query(value = "SELECT token FROM users WHERE token = :token" , nativeQuery = true)
     String checkToken(@Param("token") String token);

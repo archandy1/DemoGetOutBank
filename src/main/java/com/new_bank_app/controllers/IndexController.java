@@ -2,6 +2,7 @@ package com.new_bank_app.controllers;
 
 
 import com.new_bank_app.repository.UserRepository;
+import com.new_bank_app.type.Attribute;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,10 +14,12 @@ public class IndexController {
 
 
     private final UserRepository userRepository;
+    private final Attribute attribute;
 
     @Autowired
-    public IndexController(UserRepository userRepository) {
+    public IndexController(UserRepository userRepository, Attribute attribute) {
         this.userRepository = userRepository;
+        this.attribute = attribute;
     }
 
     @GetMapping("/")
@@ -34,20 +37,20 @@ public class IndexController {
     }
 
     @GetMapping("/verify")
-    public ModelAndView getVerify(@RequestParam("token") String token, @RequestParam("code") String code) {
+    public ModelAndView getVerify(@RequestParam("token") String token) {
 
         ModelAndView getVerifyPage;
         String dbToken = userRepository.checkToken(token);
 
         if (dbToken == null) {
             getVerifyPage = new ModelAndView("error");
-            getVerifyPage.addObject("error", "This session Has Expired");
+            getVerifyPage.addObject(attribute.ERROR, "This session Has Expired");
             return getVerifyPage;
         }
 
-        userRepository.verifyAccount(token, code);
+        userRepository.verifyAccount(token);
         getVerifyPage = new ModelAndView("login");
-        getVerifyPage.addObject("success", "Account Verified Successfully, please login.");
+        getVerifyPage.addObject(attribute.SUCCESS, "Account Verified Successfully, please login.");
         return getVerifyPage;
     }
 }

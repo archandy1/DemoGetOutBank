@@ -4,6 +4,7 @@ import com.new_bank_app.helpers.GenAccountNumber;
 import com.new_bank_app.models.User;
 import com.new_bank_app.repository.AccountRepository;
 import com.new_bank_app.services.UserService;
+import com.new_bank_app.type.Attribute;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,11 +20,14 @@ public class AccountController {
 
     private final AccountRepository accountRepository;
     private final UserService userService;
+    private final Attribute attribute;
+
 
     @Autowired
-    public AccountController(AccountRepository accountRepository, UserService userService) {
+    public AccountController(AccountRepository accountRepository, UserService userService, Attribute attribute) {
         this.accountRepository = accountRepository;
         this.userService = userService;
+        this.attribute = attribute;
     }
 
     @PostMapping("/create_account")
@@ -33,7 +37,7 @@ public class AccountController {
                                 HttpSession session) {
 
         if(accountName.isEmpty() || accountType.isEmpty()) {
-            redirectAttributes.addFlashAttribute("error", "account name and type cannot be empty");
+            redirectAttributes.addFlashAttribute(attribute.ERROR, "account name and type cannot be empty");
             return "redirect:/app/dashboard";
         }
 
@@ -42,7 +46,7 @@ public class AccountController {
         String accountNumber = GenAccountNumber.generateAccountNumber();
 
         accountRepository.createBankAccount(user.getUser_id(), accountNumber, accountName, accountType);
-        redirectAttributes.addFlashAttribute("success", "account created.");
+        redirectAttributes.addFlashAttribute(attribute.SUCCESS, "account created.");
         //
         return "redirect:/app/dashboard";
     }

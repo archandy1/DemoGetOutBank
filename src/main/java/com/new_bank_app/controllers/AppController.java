@@ -1,11 +1,9 @@
 package com.new_bank_app.controllers;
 
 import com.new_bank_app.models.Account;
-//import com.new_bank_app.models.PaymentHistory;
 import com.new_bank_app.models.TransactionHistory;
 import com.new_bank_app.models.User;
 import com.new_bank_app.repository.AccountRepository;
-//import com.new_bank_app.repository.PaymentHistoryRepository;
 import com.new_bank_app.repository.TransactionRepository;
 import com.new_bank_app.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
