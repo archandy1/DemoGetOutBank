@@ -16,7 +16,7 @@
     <!-- Card: body-->
     <div class="card-body">
         <!-- card header -->
-        <h1 style="font-family:"DA_FuturaPT Medium", sans-serif" id="company">Get-out Bank</h1>
+        <h1 style="font-family:"DA_FuturaPT Medium", sans-serif" id="company">GetOutBank</h1>
         <!-- End card header -->
 
         <!-- card title -->

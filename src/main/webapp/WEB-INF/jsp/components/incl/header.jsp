@@ -10,7 +10,7 @@
     <div class="container d-flex">
         <!-- Company Name -->
         <div id="company" class=" h1 company-name">
-            Get-Out-Bank
+            GetOutBank
         </div>
         <!-- End Company Name -->
 
