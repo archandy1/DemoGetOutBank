@@ -25,20 +25,20 @@ public interface UserRepository extends CrudRepository< User, Integer > {
 
     @Modifying
     @Query(value = "INSERT INTO users (first_name, last_name, email, password, pesel, date_of_birth, city, zip_code, street_name, street_number, flat_or_building_number, phone_number, token) VALUES" +
-            "(:first_name, :last_name, :email, :password, :pesel, :date_of_birth, :city, :zip_code, :street_name, :street_number, :flat_or_building_number, :phone_number, :token)", nativeQuery = true)
+            "(:firstName, :lastName, :email, :password, :pesel, :dateOfBirth, :city, :zipCode, :streetName, :streetNumber, :flatOrBuildingNumber, :phoneNumber, :token)", nativeQuery = true)
     @Transactional
-    void registerUser(@Param("first_name") String first_name,
-                      @Param("last_name") String last_name,
+    void registerUser(@Param("firstName") String firstName,
+                      @Param("lastName") String lastName,
                       @Param("email") String email,
                       @Param("password") String password,
                       @Param("pesel") String pesel,
-                      @Param("date_of_birth") String date_of_birth,
+                      @Param("dateOfBirth") String dateOfBirth,
                       @Param("city") String city,
-                      @Param("zip_code") String zip_code,
-                      @Param("street_name") String street_name,
-                      @Param("street_number") String street_number,
-                      @Param("flat_or_building_number") String flat_or_building_number,
-                      @Param("phone_number") String phone_number,
+                      @Param("zipCode") String zipCode,
+                      @Param("streetName") String streetName,
+                      @Param("streetNumber") String streetNumber,
+                      @Param("flatOrBuildingNumber") String flatOrBuildingNumber,
+                      @Param("phoneNumber") String phoneNumber,
                       @Param("token") String token);
 
     @Modifying

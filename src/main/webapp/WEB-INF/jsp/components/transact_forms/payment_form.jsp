@@ -19,7 +19,7 @@
             <!-- Form Group -->
             <div class="form-group mb-2">
                 <label for=""> Account Number</label>
-                <input type="text" name="account_number" class="form-control" placeholder="Enter Account holder number">
+                <input type="text" name="accountNumber" class="form-control" placeholder="Enter Account holder number">
             </div>
             <!-- End of Form Group -->
 
@@ -27,12 +27,12 @@
             <div class="form-group">
                 <label for="">Select Account</label>
                 <!-- Select account option -->
-                <select name="account_id" class="form-control" id="">
+                <select name="accountId" class="form-control" id="">
                     <option value="">Select Account</option>
 
                     <c:if test="${userAccounts !=null }">
                         <c:forEach items="${userAccounts}" var="selectAccount">
-                            <option value="${selectAccount.account_id}">${selectAccount.account_name}</option>
+                            <option value="${selectAccount.accountId}">${selectAccount.accountName}</option>
                         </c:forEach>
                     </c:if>
                 </select>

@@ -44,13 +44,13 @@
                     <!-- Loop through Payment history  -->
                     <c:forEach items="${requestScope.transact_history}" var="trasactionHistory">
                         <tr>
-                            <td>${trasactionHistory.transaction_id}</td>
-                            <td>${trasactionHistory.account_name}</td>
-                            <td>${trasactionHistory.transaction_type}</td>
+                            <td>${trasactionHistory.transactionId}</td>
+                            <td>${trasactionHistory.accountName}</td>
+                            <td>${trasactionHistory.transactionType}</td>
                             <td>${trasactionHistory.amount}</td>
                             <td>${trasactionHistory.source}</td>
                             <td>${trasactionHistory.status}</td>
-                            <td>${trasactionHistory.created_at}</td>
+                            <td>${trasactionHistory.createdAt}</td>
                         </tr>
                     </c:forEach>
                     <!-- End Loop through Payment history  -->

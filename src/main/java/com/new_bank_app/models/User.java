@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.pl.PESEL;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -21,11 +20,11 @@ import java.time.LocalDateTime;
 public class User {
 
     @Id
-    private int user_id;
+    private int userId;
     @NotEmpty(message = "Filed cannot be empty")
-    private String first_name;
+    private String firstName;
     @NotEmpty(message = "Filed cannot be empty")
-    private String last_name;
+    private String lastName;
     @Email
     @NotEmpty(message = "Filed cannot be empty")
     @Pattern(regexp = "([a-zA-Z0-9]+(?:[._+-][a-zA-Z0-9]+)*)@([a-zA-Z0-9]+(?:[.-][a-zA-Z0-9]+)*[.][a-zA-Z]{2,})", message = "Please enter valid email format.")
@@ -34,17 +33,17 @@ public class User {
     private String password;
     @PESEL
     private String pesel;
-    private String date_of_birth;
+    private String dateOfBirth;
     private String city;
-    private String zip_code;
-    private String street_name;
-    private String street_number;
-    private String flat_or_building_number;
-    private String phone_number;
+    private String zipCode;
+    private String streetName;
+    private String streetNumber;
+    private String flatOrBuildingNumber;
+    private String phoneNumber;
     private String token;
     private int verified;
-    private LocalDate verified_at;
-    private LocalDateTime created_at;
-    private LocalDateTime updated_at;
+    private LocalDate verifiedAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
 }

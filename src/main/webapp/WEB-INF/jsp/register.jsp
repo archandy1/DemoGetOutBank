@@ -48,14 +48,14 @@
             <div class="row">
                 <!-- From group -->
                 <div class="form-group col">
-                    <form:input type="text" path="first_name" class="form-control" placeholder="Enter first name"/>
-                    <form:errors path="first_name" class="bg-denger"/>
+                    <form:input type="text" path="firstName" class="form-control" placeholder="Enter first name"/>
+                    <form:errors path="firstName" class="bg-denger"/>
                 </div>
                 <!-- End of From group -->
                 <!-- From group -->
                 <div class="form-group col">
-                    <form:input type="text" path="last_name" class="form-control" placeholder="Enter last name"/>
-                    <form:errors path="last_name" class="bg-denger"/>
+                    <form:input type="text" path="lastName" class="form-control" placeholder="Enter last name"/>
+                    <form:errors path="lastName" class="bg-denger"/>
                 </div>
                 <!-- End of From group -->
             </div>
@@ -92,9 +92,9 @@
                 <!-- End of From group -->
                 <!-- From group -->
                 <div class="form-group col">
-                    <form:input type="text" path="date_of_birth" class="form-control"
+                    <form:input type="text" path="dateOfBirth" class="form-control"
                                 placeholder="Enter date of birth"/>
-                    <form:errors path="date_of_birth" class="bg-denger"/>
+                    <form:errors path="dateOfBirth" class="bg-denger"/>
                 </div>
                 <!-- End of From group -->
             </div>
@@ -107,38 +107,38 @@
                 <!-- End of From group -->
                 <!-- From group -->
                 <div class="form-group col">
-                    <form:input type="text" path="zip_code" class="form-control" placeholder="Enter Zip-code"/>
-                    <form:errors path="zip_code" class="bg-denger"/>
+                    <form:input type="text" path="zipCode" class="form-control" placeholder="Enter Zip-code"/>
+                    <form:errors path="zipCode" class="bg-denger"/>
                 </div>
                 <!-- End of From group -->
             </div>
             <div class="row">
                 <!-- From group -->
                 <div class="form-group col">
-                    <form:input type="text" path="street_name" class="form-control" placeholder="Enter Street Name"/>
-                    <form:errors path="street_name" class="bg-denger"/>
+                    <form:input type="text" path="streetName" class="form-control" placeholder="Enter Street Name"/>
+                    <form:errors path="streetName" class="bg-denger"/>
                 </div>
                 <!-- End of From group -->
                 <!-- From group -->
                 <div class="form-group col">
-                    <form:input type="text" path="street_number" class="form-control"
+                    <form:input type="text" path="streetNumber" class="form-control"
                                 placeholder="Enter Street Number"/>
-                    <form:errors path="street_number" class="bg-denger"/>
+                    <form:errors path="streetNumber" class="bg-denger"/>
                 </div>
                 <!-- End of From group -->
             </div>
             <div class="row">
                 <!-- From group -->
                 <div class="form-group col">
-                    <form:input type="text" path="flat_or_building_number" class="form-control"
+                    <form:input type="text" path="flatOrBuildingNumber" class="form-control"
                                 placeholder="Enter Building number"/>
-                    <form:errors path="flat_or_building_number" class="bg-denger"/>
+                    <form:errors path="flatOrBuildingNumber" class="bg-denger"/>
                 </div>
                 <!-- End of From group -->
                 <!-- From group -->
                 <div class="form-group col">
-                    <form:input type="text" path="phone_number" class="form-control" placeholder="Enter Phone number"/>
-                    <form:errors path="phone_number" class="bg-denger"/>
+                    <form:input type="text" path="phoneNumber" class="form-control" placeholder="Enter Phone number"/>
+                    <form:errors path="phoneNumber" class="bg-denger"/>
                 </div>
                 <!-- End of From group -->
             </div>

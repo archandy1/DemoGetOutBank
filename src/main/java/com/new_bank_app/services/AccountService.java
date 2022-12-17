@@ -15,8 +15,8 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
-    public Account getAccount(int account_id) {
-        return accountRepository.getAccountById(account_id);
+    public Account getAccount(int accountId) {
+        return accountRepository.getAccountById(accountId);
     }
 
 }

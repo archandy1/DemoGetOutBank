@@ -16,13 +16,13 @@ public class ValidationService {
         this.accountRepository = accountRepository;
     }
 
-    public boolean checkWithdrawGreaterThanBalance(int account_id, BigDecimal withdrawAmountValue, User user) {
-        BigDecimal currentBalance = accountRepository.getAccountBalance(user.getUser_id(), account_id);
+    public boolean checkWithdrawGreaterThanBalance(int accountId, BigDecimal withdrawAmountValue, User user) {
+        BigDecimal currentBalance = accountRepository.getAccountBalance(user.getUserId(), accountId);
         return (currentBalance.compareTo(withdrawAmountValue) < 0);
     }
 
     public boolean checkTransferGreaterThanBalance(int transferFromId, BigDecimal transferAmount,  User user) {
-        BigDecimal currentBalanceAccountFrom = accountRepository.getAccountBalance(user.getUser_id(), transferFromId);
+        BigDecimal currentBalanceAccountFrom = accountRepository.getAccountBalance(user.getUserId(), transferFromId);
         return (currentBalanceAccountFrom.compareTo(transferAmount) < 0);
     }
 }

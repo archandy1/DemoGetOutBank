@@ -24,7 +24,7 @@
 
         <!-- Display name -->
         <div class="display-name ms-auto text-white">
-            <i class="fa fa-circle text-success"></i> Welcome: <span>${user.first_name} ${user.last_name}</span>
+            <i class="fa fa-circle text-success"></i> Welcome: <span>${user.firstName} ${user.lastName}</span>
         </div>
         <!-- End of  Display name -->
 

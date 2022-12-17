@@ -18,7 +18,7 @@
 
                     <c:if test="${userAccounts !=null }">
                         <c:forEach items="${userAccounts}" var="selectAccount">
-                            <option value="${selectAccount.account_id}">${selectAccount.account_name}</option>
+                            <option value="${selectAccount.accountId}">${selectAccount.accountName}</option>
                         </c:forEach>
                     </c:if>
                 </select>
@@ -35,7 +35,7 @@
 
                     <c:if test="${userAccounts !=null }">
                         <c:forEach items="${userAccounts}" var="selectAccount">
-                            <option value="${selectAccount.account_id}">${selectAccount.account_name}</option>
+                            <option value="${selectAccount.accountId}">${selectAccount.accountName}</option>
                         </c:forEach>
                     </c:if>
                 </select>

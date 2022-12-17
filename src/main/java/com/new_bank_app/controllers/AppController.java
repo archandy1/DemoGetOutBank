@@ -41,9 +41,9 @@ public class AppController {
 
         User user = userService.getUser(session);
 
-        List<Account> getUserAccounts = accountRepository.getUserAccountsById(user.getUser_id());
+        List<Account> getUserAccounts = accountRepository.getUserAccountsById(user.getUserId());
 
-        BigDecimal totalAccountsBalance = accountRepository.getTotalBalance(user.getUser_id());
+        BigDecimal totalAccountsBalance = accountRepository.getTotalBalance(user.getUserId());
 
         getDashboardPage.addObject("userAccounts", getUserAccounts);
         getDashboardPage.addObject("totalBalance", totalAccountsBalance);
@@ -59,7 +59,7 @@ public class AppController {
 
         User user = userService.getUser(session);
 
-        List<TransactionHistory> userTransactHistory = transactHistoryRepository.getTransactionRecordsById(user.getUser_id());
+        List<TransactionHistory> userTransactHistory = transactHistoryRepository.getTransactionRecordsById(user.getUserId());
         getTransactHistoryPage.addObject("transact_history", userTransactHistory);
 
         return getTransactHistoryPage;

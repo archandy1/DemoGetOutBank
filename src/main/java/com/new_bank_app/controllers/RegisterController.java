@@ -39,19 +39,19 @@ public class RegisterController {
     @PostMapping("/register")
     public ModelAndView register(@Valid @ModelAttribute("registerUser") User user,
                                  BindingResult result,
-                                 @RequestParam("first_name") String first_name,
-                                 @RequestParam("last_name") String last_name,
+                                 @RequestParam("firstName") String firstName,
+                                 @RequestParam("lastName") String lastName,
                                  @RequestParam("email") String email,
                                  @RequestParam("password") String password,
                                  @RequestParam("confirm_password") String confirm_password,
                                  @RequestParam("pesel") String pesel,
-                                 @RequestParam("date_of_birth") String date_of_birth,
+                                 @RequestParam("dateOfBirth") String dateOfBirth,
                                  @RequestParam("city") String city,
-                                 @RequestParam("zip_code") String zip_code,
-                                 @RequestParam("street_name") String street_name,
-                                 @RequestParam("street_number") String street_number,
-                                 @RequestParam("flat_or_building_number") String flat_or_building_number,
-                                 @RequestParam("phone_number") String phone_number) throws MessagingException {
+                                 @RequestParam("zipCode") String zipCode,
+                                 @RequestParam("streetName") String streetName,
+                                 @RequestParam("streetNumber") String streetNumber,
+                                 @RequestParam("flatOrBuildingNumber") String flatOrBuildingNumber,
+                                 @RequestParam("phoneNumber") String phoneNumber) throws MessagingException {
 
         ModelAndView registrationPage = new ModelAndView("register");
 
@@ -73,10 +73,10 @@ public class RegisterController {
         String encoded_password = BCrypt.hashpw(password, BCrypt.gensalt());
 
         userRepository.registerUser(
-                first_name, last_name, email,
-                encoded_password, pesel, date_of_birth,
-                city, zip_code, street_name, street_number,
-                flat_or_building_number, phone_number, token);
+                firstName, lastName, email,
+                encoded_password, pesel, dateOfBirth,
+                city, zipCode, streetName, streetNumber,
+                flatOrBuildingNumber, phoneNumber, token);
 
         MailMessenger.htmlEmailMessenger("bank@getoutbank.com", email, "Verify Account", emailBody);
 

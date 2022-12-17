@@ -20,13 +20,13 @@
                     <!-- Form group  -->
                     <div class="form-group mb-3">
                         <label for="">Enter Account Name</label>
-                        <input type="text" name="account_name" class="form-control" placeholder="Enter Account Name">
+                        <input type="text" name="accountName" class="form-control" placeholder="Enter Account Name">
                     </div>
                     <!-- End of Form group  -->
                     <!-- Form group  -->
                     <div class="form-group mb-3">
                         <label for="">Select Account Type</label>
-                        <select name="account_type" id="" class="form-control">
+                        <select name="accountType" id="" class="form-control">
                             <option value="current">Current</option>
                             <option value="savings">Savings</option>
                         </select>

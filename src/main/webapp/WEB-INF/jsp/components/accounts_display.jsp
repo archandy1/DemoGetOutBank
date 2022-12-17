@@ -40,25 +40,25 @@
         <div class="accordion-item">
             <h2 class="accordion-header" id="flush-headingOne">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#flush-${account.account_id}" aria-expanded="false"
+                        data-bs-target="#flush-${account.accountId}" aria-expanded="false"
                         aria-controls="flush-collapseOne">
-                        ${account.account_name}
+                        ${account.accountName}
                 </button>
             </h2>
-            <div id="flush-${account.account_id}" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+            <div id="flush-${account.accountId}" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
                  data-bs-parent="#accordionFlushExample">
                 <div class="accordion-body">
                     <!-- Account detail list -->
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item d-flex">Account Name <span
-                                class="ms-auto"><b>${account.account_name}</b></span></li>
+                                class="ms-auto"><b>${account.accountName}</b></span></li>
                         <li class="list-group-item d-flex">Account Number <span
-                                class="ms-auto"><b>${account.account_number}</b></span></li>
+                                class="ms-auto"><b>${account.accountNumber}</b></span></li>
                         <li class="list-group-item d-flex">Account Type <span
-                                class="ms-auto"><b>${account.account_type}</b></span></li>
+                                class="ms-auto"><b>${account.accountType}</b></span></li>
                         <li class="list-group-item d-flex">Account Balance <span
                                 class="ms-auto"><b>${account.balance}</b></span></li>
-                        <li class="list-group-item d-flex">Created at <span class="ms-auto"><b>${account.created_at}</b></span>
+                        <li class="list-group-item d-flex">Created at <span class="ms-auto"><b>${account.createdAt}</b></span>
                         </li>
                     </ul>
                     <!-- End Account detail list -->

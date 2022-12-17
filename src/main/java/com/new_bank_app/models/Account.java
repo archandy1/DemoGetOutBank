@@ -3,7 +3,6 @@ package com.new_bank_app.models;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -17,12 +16,12 @@ import java.time.LocalDateTime;
 public class Account {
 
     @Id
-    private int account_id;
-    private int user_id;
-    private String account_number;
-    private String account_name;
-    private String account_type;
+    private int accountId;
+    private int userId;
+    private String accountNumber;
+    private String accountName;
+    private String accountType;
     private BigDecimal balance;
-    private LocalDateTime created_at;
-    private LocalDateTime updated_at;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }

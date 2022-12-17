@@ -42,7 +42,7 @@ public class TransactController {
 
     @PostMapping("/deposit")
     public String deposit(@RequestParam("deposit_amount") String depositAmount,
-                          @RequestParam("account_id") String accountID,
+                          @RequestParam("accountId") String accountID,
                           HttpSession session,
                           RedirectAttributes redirectAttributes) {
 
@@ -101,7 +101,7 @@ public class TransactController {
         } else {
             transactService.executeTransfer(transferFromId, transferToId, transferAmount, user);
             String accountName = accountRepository.getUserAccountName(String.valueOf(transferFromId));
-            transactRepository.logTransaction(transferFromId, user.getUser_id(), accountName,"transfer", transferAmount, "online", attribute.SUCCESS, LocalDateTime.now());
+            transactRepository.logTransaction(transferFromId, user.getUserId(), accountName,"transfer", transferAmount, "online", attribute.SUCCESS, LocalDateTime.now());
             redirectAttributes.addFlashAttribute(attribute.SUCCESS, "Transfer success");
         }
         return "redirect:/app/dashboard";
@@ -109,7 +109,7 @@ public class TransactController {
 
     @PostMapping("/withdraw")
     public String withdraw(@RequestParam("withdrawal_amount") String withdrawal_amount,
-                           @RequestParam("account_id") String accountID,
+                           @RequestParam("accountId") String accountID,
                            HttpSession session,
                            RedirectAttributes redirectAttributes) {
 
@@ -117,7 +117,7 @@ public class TransactController {
             redirectAttributes.addFlashAttribute(attribute.ERROR, "Withdraw amount cannot be empty.");
             return "redirect:/app/dashboard";
         }
-        int account_id = Integer.parseInt(accountID);
+        int accountId = Integer.parseInt(accountID);
         BigDecimal withdrawAmountValue = BigDecimal.valueOf(Double.parseDouble(withdrawal_amount));
 
         User user = userService.getUser(session);
@@ -127,12 +127,12 @@ public class TransactController {
             return "redirect:/app/dashboard";
         }
 
-        boolean isWithdrawGreaterThanBalance = validationService.checkWithdrawGreaterThanBalance(account_id, withdrawAmountValue, user);
+        boolean isWithdrawGreaterThanBalance = validationService.checkWithdrawGreaterThanBalance(accountId, withdrawAmountValue, user);
         if (isWithdrawGreaterThanBalance) {
             redirectAttributes.addFlashAttribute(attribute.ERROR, "Insufficient funds to execute withdrawal.");
             return "redirect:/app/dashboard";
         } else {
-            transactService.executeWithdraw(account_id, withdrawAmountValue, user);
+            transactService.executeWithdraw(accountId, withdrawAmountValue, user);
         }
         return "redirect:/app/dashboard";
     }

@@ -14,36 +14,36 @@ import java.util.List;
 @Repository
 public interface AccountRepository extends CrudRepository <Account, Integer> {
 
-    @Query(value = "SELECT * FROM accounts WHERE user_id = :user_id ", nativeQuery = true)
-    List<Account> getUserAccountsById(@Param("user_id")int user_id);
+    @Query(value = "SELECT * FROM accounts WHERE user_id = :userId ", nativeQuery = true)
+    List<Account> getUserAccountsById(@Param("userId")int userId);
 
 
-    @Query(value = "SELECT * FROM accounts WHERE account_id = :account_id ", nativeQuery = true)
-    Account getAccountById(@Param("account_id")int account_id);
+    @Query(value = "SELECT * FROM accounts WHERE account_id = :accountId ", nativeQuery = true)
+    Account getAccountById(@Param("accountId")int accountId);
 
-    @Query(value = "SELECT sum(balance) FROM accounts WHERE user_id = :user_id ", nativeQuery = true)
-    BigDecimal getTotalBalance(@Param("user_id")int user_id);
+    @Query(value = "SELECT sum(balance) FROM accounts WHERE user_id = :userId ", nativeQuery = true)
+    BigDecimal getTotalBalance(@Param("userId")int userId);
 
-    @Query(value = "SELECT balance FROM accounts WHERE user_id = :user_id AND account_id = :account_id", nativeQuery = true)
-    BigDecimal getAccountBalance(@Param("user_id")int user_id, @Param("account_id") int account_id);
+    @Query(value = "SELECT balance FROM accounts WHERE user_id = :userId AND account_id = :accountId", nativeQuery = true)
+    BigDecimal getAccountBalance(@Param("userId")int userId, @Param("accountId") int accountId);
 
-    @Query(value = "SELECT account_name FROM accounts WHERE account_id = :account_id", nativeQuery = true)
-    String getUserAccountName(@Param("account_id") String account_id);
+    @Query(value = "SELECT account_name FROM accounts WHERE account_id = :accountId", nativeQuery = true)
+    String getUserAccountName(@Param("accountId") String accountId);
 
 
     @Modifying
-    @Query(value = "UPDATE accounts SET balance = :new_balance WHERE account_id = :account_id", nativeQuery = true)
+    @Query(value = "UPDATE accounts SET balance = :new_balance WHERE account_id = :accountId", nativeQuery = true)
     @Transactional
     void changeAccountBalanceById(
                                   @Param("new_balance") BigDecimal new_balance,
-                                  @Param("account_id") int account_id);
+                                  @Param("accountId") int accountId);
 
     @Modifying
     @Query(value = "INSERT INTO accounts(user_id, account_number, account_name, account_type) VALUES " +
-            "(:user_id, :account_number, :account_name, :account_type)" , nativeQuery = true)
+            "(:userId, :accountNumber, :accountName, :accountType)" , nativeQuery = true)
     @Transactional
-    void createBankAccount(@Param("user_id") int user_id,
-                           @Param("account_number") String account_number,
-                           @Param("account_name") String account_name,
-                           @Param("account_type") String account_type);
+    void createBankAccount(@Param("userId") int userId,
+                           @Param("accountNumber") String accountNumber,
+                           @Param("accountName") String accountName,
+                           @Param("accountType") String accountType);
 }

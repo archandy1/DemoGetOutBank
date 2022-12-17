@@ -31,8 +31,8 @@ public class AccountController {
     }
 
     @PostMapping("/create_account")
-    public String createAccount(@RequestParam("account_name") String accountName,
-                                @RequestParam("account_type") String accountType,
+    public String createAccount(@RequestParam("accountName") String accountName,
+                                @RequestParam("accountType") String accountType,
                                 RedirectAttributes redirectAttributes,
                                 HttpSession session) {
 
@@ -45,7 +45,7 @@ public class AccountController {
 
         String accountNumber = GenAccountNumber.generateAccountNumber();
 
-        accountRepository.createBankAccount(user.getUser_id(), accountNumber, accountName, accountType);
+        accountRepository.createBankAccount(user.getUserId(), accountNumber, accountName, accountType);
         redirectAttributes.addFlashAttribute(attribute.SUCCESS, "account created.");
         //
         return "redirect:/app/dashboard";
