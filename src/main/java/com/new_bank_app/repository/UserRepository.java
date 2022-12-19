@@ -1,6 +1,7 @@
 package com.new_bank_app.repository;
 
 import com.new_bank_app.models.User;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -8,8 +9,13 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Repository
-public interface UserRepository extends CrudRepository< User, Integer > {
+@Transactional(readOnly = true)
+public interface UserRepository extends JpaRepository<User, Long> /*extends CrudRepository< User, Integer >*/ {
+
+    Optional<User> findByEmail(String email);
 
     @Query(value = "SELECT * FROM users WHERE email = :email", nativeQuery = true)
     User getUserDetails(@Param("email")  String email);
@@ -49,3 +55,4 @@ public interface UserRepository extends CrudRepository< User, Integer > {
     @Query(value = "SELECT token FROM users WHERE token = :token" , nativeQuery = true)
     String checkToken(@Param("token") String token);
 }
+

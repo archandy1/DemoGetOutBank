@@ -53,7 +53,7 @@ public class TransactController {
 
         User user = userService.getUser(session);
 
-        int acc_id = Integer.parseInt(accountID);
+        Long acc_id = (long) Integer.parseInt(accountID);
         BigDecimal depositAmountValue = BigDecimal.valueOf(Double.parseDouble(depositAmount));
 
         if (depositAmountValue.compareTo(BigDecimal.ZERO) <= 0) {
@@ -80,8 +80,8 @@ public class TransactController {
 
         User user = userService.getUser(session);
 
-        int transferFromId = Integer.parseInt(transfer_from);
-        int transferToId = Integer.parseInt(transfer_to);
+        Long transferFromId = (long) Integer.parseInt(transfer_from);
+        Long transferToId = (long) Integer.parseInt(transfer_to);
         BigDecimal transferAmount = BigDecimal.valueOf(Double.parseDouble(transfer_amount));
 
         if (transfer_from.equals(transfer_to)) {
@@ -117,7 +117,7 @@ public class TransactController {
             redirectAttributes.addFlashAttribute(attribute.ERROR, "Withdraw amount cannot be empty.");
             return "redirect:/app/dashboard";
         }
-        int accountId = Integer.parseInt(accountID);
+        Long accountId = (long) Integer.parseInt(accountID);
         BigDecimal withdrawAmountValue = BigDecimal.valueOf(Double.parseDouble(withdrawal_amount));
 
         User user = userService.getUser(session);

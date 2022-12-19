@@ -5,30 +5,34 @@ import com.new_bank_app.helpers.Token;
 import com.new_bank_app.mailMessenger.MailMessenger;
 import com.new_bank_app.models.User;
 import com.new_bank_app.repository.UserRepository;
+import com.new_bank_app.services.RegistrationService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.mail.MessagingException;
 import javax.validation.Valid;
 
 @Controller
-public class RegisterController {
-
+@AllArgsConstructor
+@RequestMapping(path = "/register")
+public class RegistrationController {
 
     private final UserRepository userRepository;
+    private RegistrationService registrationService;
 
-    @Autowired
-    public RegisterController(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
+    //todo: new version
+//    @PostMapping
+//    public String register(@RequestBody RegistrationRequest request) {
+//        return registrationService.register(request);
+//    }
+//
+//     todo: old version
     @GetMapping("/register")
     public ModelAndView getRegister() {
         ModelAndView getRegisterPage = new ModelAndView("register");

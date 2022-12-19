@@ -40,8 +40,11 @@ public class AccountController {
             redirectAttributes.addFlashAttribute(attribute.ERROR, "account name and type cannot be empty");
             return "redirect:/app/dashboard";
         }
-
+//     todo: old
         User user = userService.getUser(session);
+
+//        todo: new
+//        User user = userService.loadUserByUsername(email);
 
         String accountNumber = GenAccountNumber.generateAccountNumber();
 

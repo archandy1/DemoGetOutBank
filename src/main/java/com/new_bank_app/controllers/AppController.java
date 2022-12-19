@@ -22,7 +22,6 @@ public class AppController {
 
     User user;
 
-
     private final AccountRepository accountRepository;
     private final TransactionRepository transactHistoryRepository;
     private final UserService userService;
@@ -33,7 +32,6 @@ public class AppController {
         this.transactHistoryRepository = transactHistoryRepository;
         this.userService = userService;
     }
-
 
     @GetMapping("/dashboard")
     public ModelAndView getDashboard(HttpSession session) {

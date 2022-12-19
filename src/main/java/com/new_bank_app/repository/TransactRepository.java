@@ -18,8 +18,8 @@ public interface TransactRepository extends CrudRepository<TransactionHistory, I
     @Transactional
     @Query(value = "INSERT INTO transaction_history(account_id, user_id, account_name, transaction_type, amount, source, status, created_at)" +
             "VALUES (:accountId, :userId, :accountName, :transactionType, :amount, :source, :status, :createdAt)", nativeQuery = true)
-    void logTransaction(@Param("accountId") int accountId,
-                        @Param("userId") int userId,
+    void logTransaction(@Param("accountId") Long accountId,
+                        @Param("userId") Long userId,
                         @Param("accountName") String accountName,
                         @Param("transactionType") String transactionType,
                         @Param("amount") BigDecimal amount,

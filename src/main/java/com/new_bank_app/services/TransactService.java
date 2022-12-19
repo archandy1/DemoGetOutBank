@@ -1,6 +1,5 @@
 package com.new_bank_app.services;
 
-import com.new_bank_app.models.Account;
 import com.new_bank_app.models.User;
 import com.new_bank_app.repository.AccountRepository;
 import com.new_bank_app.repository.TransactRepository;
@@ -17,8 +16,6 @@ public class TransactService {
     private final TransactRepository transactRepository;
     private final AccountService accountService;
 
-
-
     @Autowired
     public TransactService(AccountRepository accountRepository, TransactRepository transactRepository, AccountService accountService) {
         this.accountRepository = accountRepository;
@@ -26,20 +23,15 @@ public class TransactService {
         this.accountService = accountService;
     }
 
-
-
-
-
-    public void executeWithdraw(int accountId, BigDecimal withdrawAmountValue, User user) {
+    public void executeWithdraw(Long accountId, BigDecimal withdrawAmountValue, User user) {
         BigDecimal currentBalance = accountRepository.getAccountBalance(user.getUserId(), accountId);
         BigDecimal newBalance = currentBalance.subtract(withdrawAmountValue);
         String accountName = accountRepository.getUserAccountName(String.valueOf(accountId));
         transactRepository.logTransaction(accountId, user.getUserId(),accountName, "withdrawal",  withdrawAmountValue, "online", "success",  LocalDateTime.now());
         accountRepository.changeAccountBalanceById(newBalance, accountId);
-
     }
 
-    public void executeDeposit(int acc_id, BigDecimal depositAmountValue, User user) {
+    public void executeDeposit(Long acc_id, BigDecimal depositAmountValue, User user) {
         BigDecimal currentBalance = accountRepository.getAccountBalance(user.getUserId(), acc_id);
         BigDecimal newBalance = currentBalance.add(depositAmountValue);
         String accountName = accountRepository.getUserAccountName(String.valueOf(acc_id));
@@ -47,7 +39,7 @@ public class TransactService {
         accountRepository.changeAccountBalanceById(newBalance, acc_id);
     }
 
-    public void executeTransfer(int transferFromId, int transferToId, BigDecimal transferAmount, User user) {
+    public void executeTransfer(Long transferFromId, Long transferToId, BigDecimal transferAmount, User user) {
         BigDecimal currentBalanceAccountFrom = accountRepository.getAccountBalance(user.getUserId(), transferFromId);
         BigDecimal currentBalanceAccountTo = accountRepository.getAccountBalance(user.getUserId(), transferToId);
         BigDecimal newBalanceAccountTransferringFrom = currentBalanceAccountFrom.subtract(transferAmount);

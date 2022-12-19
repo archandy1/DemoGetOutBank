@@ -15,7 +15,7 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
-    public Account getAccount(int accountId) {
+    public Account getAccount(Long accountId) {
         return accountRepository.getAccountById(accountId);
     }
 

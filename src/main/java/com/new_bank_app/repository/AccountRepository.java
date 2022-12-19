@@ -15,17 +15,21 @@ import java.util.List;
 public interface AccountRepository extends CrudRepository <Account, Integer> {
 
     @Query(value = "SELECT * FROM accounts WHERE user_id = :userId ", nativeQuery = true)
-    List<Account> getUserAccountsById(@Param("userId")int userId);
+    List<Account> getUserAccountsById(@Param("userId")Long userId);
+
+    //todo: test
+    @Query(value = "SELECT * FROM accounts", nativeQuery = true)
+    List<Account> getAllAccounts();
 
 
     @Query(value = "SELECT * FROM accounts WHERE account_id = :accountId ", nativeQuery = true)
-    Account getAccountById(@Param("accountId")int accountId);
+    Account getAccountById(@Param("accountId")Long accountId);
 
     @Query(value = "SELECT sum(balance) FROM accounts WHERE user_id = :userId ", nativeQuery = true)
-    BigDecimal getTotalBalance(@Param("userId")int userId);
+    BigDecimal getTotalBalance(@Param("userId")Long userId);
 
     @Query(value = "SELECT balance FROM accounts WHERE user_id = :userId AND account_id = :accountId", nativeQuery = true)
-    BigDecimal getAccountBalance(@Param("userId")int userId, @Param("accountId") int accountId);
+    BigDecimal getAccountBalance(@Param("userId")Long userId, @Param("accountId") Long accountId);
 
     @Query(value = "SELECT account_name FROM accounts WHERE account_id = :accountId", nativeQuery = true)
     String getUserAccountName(@Param("accountId") String accountId);
@@ -36,13 +40,13 @@ public interface AccountRepository extends CrudRepository <Account, Integer> {
     @Transactional
     void changeAccountBalanceById(
                                   @Param("new_balance") BigDecimal new_balance,
-                                  @Param("accountId") int accountId);
+                                  @Param("accountId") Long accountId);
 
     @Modifying
     @Query(value = "INSERT INTO accounts(user_id, account_number, account_name, account_type) VALUES " +
             "(:userId, :accountNumber, :accountName, :accountType)" , nativeQuery = true)
     @Transactional
-    void createBankAccount(@Param("userId") int userId,
+    void createBankAccount(@Param("userId") Long userId,
                            @Param("accountNumber") String accountNumber,
                            @Param("accountName") String accountName,
                            @Param("accountType") String accountType);

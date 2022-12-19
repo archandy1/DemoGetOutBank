@@ -16,10 +16,10 @@ import java.time.LocalDateTime;
 public class TransactionHistory {
 
     @Id
-    private int transactionId;
+    private Long transactionId;
     private String accountId;
     private String accountName;
-    private int userId;
+    private Long userId;
     private String transactionType;
     private BigDecimal amount;
     private String source;

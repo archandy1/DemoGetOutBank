@@ -16,8 +16,8 @@ import java.time.LocalDateTime;
 public class Account {
 
     @Id
-    private int accountId;
-    private int userId;
+    private Long accountId;
+    private Long userId;
     private String accountNumber;
     private String accountName;
     private String accountType;
